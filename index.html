@@ -83,7 +83,7 @@
     <div class="button-container">
       <button id="downloadExcel">Téléchargez Excel</button>
       <button id="takeScreenshot">Téléchargez Image</button>
-      <button onclick="copyLink()">Copier</button>
+      <button onclick="copyLink()">Copier le lien</button>
 
     </div>
     <h3>EFFECTIF F20</h3>
@@ -99,14 +99,14 @@
     <script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
     <script>
        function copyLink() {
-            // الحصول على رابط الصفحة الحالية
+            
             const currentURL = window.location.href;
 
-            // نسخ الرابط إلى الحافظة
+            
             navigator.clipboard.writeText(currentURL).then(() => {
-                alert("تم نسخ الرابط بنجاح!");
+                alert("Le lien a été copié avec succès !");
             }).catch((err) => {
-                alert("حدث خطأ أثناء نسخ الرابط: " + err);
+                alert("Une erreur s'est produite lors de la copie du lien: " + err);
             });
         }
       let data = [];
