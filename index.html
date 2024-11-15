@@ -76,12 +76,15 @@
       .button-container button:active {
         background-color: #39843b;
       }
+      
     </style>
   </head>
   <body>
     <div class="button-container">
       <button id="downloadExcel">Téléchargez Excel</button>
       <button id="takeScreenshot">Téléchargez Image</button>
+      <button onclick="copyLink()">Copier</button>
+
     </div>
     <h3>EFFECTIF F20</h3>
     <!-- Table -->
@@ -95,6 +98,17 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
     <script>
+       function copyLink() {
+            // الحصول على رابط الصفحة الحالية
+            const currentURL = window.location.href;
+
+            // نسخ الرابط إلى الحافظة
+            navigator.clipboard.writeText(currentURL).then(() => {
+                alert("تم نسخ الرابط بنجاح!");
+            }).catch((err) => {
+                alert("حدث خطأ أثناء نسخ الرابط: " + err);
+            });
+        }
       let data = [];
 
       function loadData() {
