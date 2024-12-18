@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google Sheets Data</title>
+  <title>EFFECTIF CAMPO</title>
   <style>
-    /* Global Styles */
+    
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -19,7 +19,7 @@
       color: #333;
     }
 
-    /* Table Styles */
+   
     table {
       width: 80%;
       margin: 20px auto;
@@ -64,7 +64,7 @@
       color: white;
     }
 
-    /* Modal Styles */
+    
     .modal {
       display: none;
       position: fixed;
@@ -108,6 +108,14 @@
     .modal label {
       margin-top: 10px;
       font-weight: bold;
+    }
+
+    .modal select {
+      margin-top: 10px;
+      font-weight: bold;
+      width: 99%;
+      padding: 5px;
+      border-radius: 4px;
     }
 
     .modal input[type="text"],
@@ -197,8 +205,9 @@
     <span class="close">&times;</span>
     
     <form id="updateForm">
-      <label for="equipe">Equipe:</label>
-      <input type="text" id="equipe" name="equipe"><br><br>
+        <label for="equipe">Equipe:</label>
+        <select id="equipe" name="equipe" class="form-control" required>
+        </select><br>
 
       <label for="finca">Finca:</label>
       <input type="text" id="finca" name="finca"><br><br>
@@ -228,7 +237,17 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
 <script>
-
+ fetch('https://script.google.com/macros/s/AKfycbxoy923OwLPZA7S2wq5qOjcp8xA1IVc-28vxSMXDCqobxt9keI_NRfQLwe9E1Y1w12OoQ/exec')
+      .then(response => response.json())
+      .then(data => {
+        const comboBox = document.getElementById('equipe');
+        data.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item;
+          option.textContent = item;
+          comboBox.appendChild(option);
+        });
+      });
 
 var confirmationModal = document.getElementById("confirmationModal");
 var confirmDeleteButton = document.getElementById("confirmDeleteButton");
@@ -262,19 +281,10 @@ function copyLink() {
             }).catch((err) => {
                 alert("Une erreur s'est produite lors de la copie du lien: " + err);
             });
-        }
+        };
 
-window.onload = function() {
-    loadData(); 
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-    var yyyy = today.getFullYear();
+       
 
-    today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("date").value = today; 
-    
-};
 
 
 const webAppUrl = "https://script.google.com/macros/s/AKfycbyw5kngb7juXJ4wVJvxrSvrI6u7K2c9fZ4k9OehRkSJbKp1oiW-z5JCiaZCjD9pypE66A/exec"; 
@@ -350,7 +360,18 @@ function loadData() {
 function openModal(index, row) {
     document.getElementById("equipe").value = row[0]; 
     document.getElementById("finca").value = row[1];   
-    document.getElementById("date").value = row[2];   
+    let rawDate = row[2]; 
+    if (rawDate.includes("T")) {
+    rawDate = rawDate.split("T")[0]; 
+    }
+    let date = new Date(rawDate);
+    date.setDate(date.getDate() + 1); 
+    let year = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, '0'); 
+    let day = String(date.getDate()).padStart(2, '0');
+    let updatedDate = `${year}-${month}-${day}`;
+
+    document.getElementById("date").value = updatedDate;
     document.getElementById("tarea").value = row[3];   
     document.getElementById("effectif").value = row[4];
     modal.style.display = "block";
