@@ -110,7 +110,7 @@
       font-weight: bold;
     }
 
-    .modal select {
+    .modal select, .modal input {
       margin-top: 10px;
       font-weight: bold;
       width: 99%;
@@ -210,16 +210,16 @@
         </select><br>
 
       <label for="finca">Finca:</label>
-      <input type="text" id="finca" name="finca" readonly><br><br>
+      <input type="text" id="finca" name="finca" readonly><br>
 
       <label for="date">Date:</label>
-      <input type="text" id="date" name="date"><br><br>
+      <input type="text" id="date" name="date"><br>
 
       <label for="tarea">Tarea:</label>
-      <input type="text" id="tarea" name="tarea"><br><br>
+       <select id="tarea" name="tarea" class="form-control" required><br>
 
       <label for="effectif">Effectif:</label>
-      <input type="number" id="effectif" name="effectif"><br><br>
+      <input type="number" id="effectif" name="effectif"><br>
 
       <button type="button" onclick="updateData()">Mettre à jour</button>
     </form>
@@ -437,7 +437,17 @@ function exportTableToExcel() {
       document.getElementById('takeScreenshot').addEventListener('click', takeScreenshot);
       document.addEventListener('DOMContentLoaded', loadData);
 
-
+ fetch('https://script.google.com/macros/s/AKfycbxLSEPXBHctMIigbNugYuXB2DvUeHRUp0dxug3-bhoPP0_HduBj1LbSCdpl_UA25p1zdw/exec')
+      .then(response => response.json())
+      .then(data => {
+        const comboBox = document.getElementById('tarea');
+        data.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item;
+          option.textContent = item;
+          comboBox.appendChild(option);
+        });
+      });
       
 </script>
 
