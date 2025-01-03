@@ -309,7 +309,7 @@ function loadData() {
             data.forEach(function(row, index) {
                 
              
-                if (row[1] === "Finca 22") {
+                if (row[1] === "FINCA 22") {
                     let tr = document.createElement("tr");
                     
                   
@@ -441,7 +441,7 @@ function exportTableToExcel() {
         const table = document.getElementById('dataTable');
         html2canvas(table).then(canvas => {
           const link = document.createElement('a');
-          link.download = 'Effectif F20.png';
+          link.download = 'Effectif.png';
           link.href = canvas.toDataURL();
           link.click();
         }).catch(error => console.error('Error:', error));
